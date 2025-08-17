@@ -189,3 +189,25 @@ def start_menu(win):
             if event.type == pygame.KEYDOWN:
                 SOUND_SWOOSH.play()
                 waiting = False
+
+def game_over_screen(win, score):
+    win.blit(BG_IMG, (0, 0))
+    text = TITLE_FONT.render("Game Over", True, (255, 0, 0))
+    score_text = STAT_FONT.render(f"Score: {score}", True, (255, 255, 255))
+    retry_text = BUTTON_FONT.render("Press SPACE to try again", True, (255, 255, 255))
+
+    win.blit(text, (WIN_WIDTH // 2 - text.get_width() // 2, 150))
+    win.blit(score_text, (WIN_WIDTH // 2 - score_text.get_width() // 2, 250))
+    win.blit(retry_text, (WIN_WIDTH // 2 - retry_text.get_width() // 2, 400))
+    pygame.display.update()
+
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    SOUND_SWOOSH.play()
+                    waiting = False
