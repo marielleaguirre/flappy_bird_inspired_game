@@ -211,3 +211,62 @@ def game_over_screen(win, score):
                 if event.key == pygame.K_SPACE:
                     SOUND_SWOOSH.play()
                     waiting = False
+
+def main():
+    win = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
+    pygame.display.set_caption("Flappy Bird")
+    clock = pygame.time.Clock()
+    start_menu(win)
+
+    while True:
+        bird = Bird(230, 350)
+        base = Base(730)
+        pipes = [Pipe(600)]
+        score = 0
+        run = True
+
+        while run:
+            clock.tick(30)
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        bird.jump()
+                        SOUND_WING.play()
+            bird.move()
+            base.move()
+
+            rem = []
+            add_pipe = False
+            for pipe in pipes:
+                pipe.move()
+                if pipe.collide(bird):
+                    SOUND_HIT.play()
+                    pygame.time.delay(100)  # Optional for timing between hit and die
+                    SOUND_DIE.play()
+                    run = False
+
+                if not pipe.passed and pipe.x < bird.x:
+                    pipe.passed = True
+                    add_pipe = True
+
+                if pipe.x + pipe.PIPE_TOP.get_width() < 0:
+                    rem.append(pipe)
+
+            if add_pipe:
+                score += 1
+                pipes.append(Pipe(600))
+                SOUND_POINT.play()
+
+            for r in rem:
+                pipes.remove(r)
+
+            if bird.y + bird.img.get_height() >= 730 or bird.y < 0:
+                run = False
+
+            draw_window(win, bird, pipes, base, score)
+
+        game_over_screen(win, score)
