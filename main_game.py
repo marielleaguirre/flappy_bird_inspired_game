@@ -171,3 +171,21 @@ def draw_window(win, bird, pipes, base, score):
     base.draw(win)
     bird.draw(win)
     pygame.display.update()
+
+def start_menu(win):
+    win.blit(BG_IMG, (0, 0))
+    title = TITLE_FONT.render("Flappy Bird", True, (255, 255, 255))
+    prompt = STAT_FONT.render("Press any key to start", True, (255, 255, 255))
+    win.blit(title, (WIN_WIDTH // 2 - title.get_width() // 2, 250))
+    win.blit(prompt, (WIN_WIDTH // 2 - prompt.get_width() // 2, 350))
+    pygame.display.update()
+
+    waiting = True
+    while waiting:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                SOUND_SWOOSH.play()
+                waiting = False
