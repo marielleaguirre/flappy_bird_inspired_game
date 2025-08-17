@@ -270,3 +270,6 @@ def main():
             draw_window(win, bird, pipes, base, score)
 
         game_over_screen(win, score)
+
+if __name__ == "__main__":
+    main()
