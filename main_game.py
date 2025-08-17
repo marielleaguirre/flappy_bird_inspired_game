@@ -23,3 +23,9 @@ BIRD_IMGS = [
 PIPE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "pipe.png")))
 BASE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "base.png")))
 BG_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bg.png")))
+
+# Use a built-in or custom beautiful font
+FONT_PATH = pygame.font.match_font('freesansbold') 
+STAT_FONT = pygame.font.Font(FONT_PATH, 50)
+TITLE_FONT = pygame.font.Font(FONT_PATH, 70)
+BUTTON_FONT = pygame.font.Font(FONT_PATH, 40)
